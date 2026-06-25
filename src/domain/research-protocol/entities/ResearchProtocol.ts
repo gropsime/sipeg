@@ -1,4 +1,5 @@
-﻿import { CanonicalCode } from "../value-objects/CanonicalCode";
+﻿import { AggregateRoot } from "../../../shared/entity/AggregateRoot";
+import { CanonicalCode } from "../value-objects/CanonicalCode";
 import { ScientificTitle } from "../value-objects/ScientificTitle";
 import { ScientificVersion } from "../value-objects/ScientificVersion";
 import { ShortTitle } from "../value-objects/ShortTitle";
@@ -25,10 +26,11 @@ export type ResearchProtocolProps = {
   updatedAt: Date;
 };
 
-export class ResearchProtocol {
+export class ResearchProtocol extends AggregateRoot<string> {
   private readonly props: ResearchProtocolProps;
 
   private constructor(props: ResearchProtocolProps) {
+    super(props.id);
     this.props = props;
   }
 
