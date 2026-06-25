@@ -1,3 +1,4 @@
+import { Result } from "../../../shared/result/Result";
 import type { ResearchProtocolStatus } from "../entities/ResearchProtocol";
 
 export class ResearchProtocolStatusPolicy {
@@ -25,5 +26,18 @@ export class ResearchProtocolStatusPolicy {
     to: ResearchProtocolStatus
   ): boolean {
     return this.transitions[from].includes(to);
+  }
+
+  public static validateTransition(
+    from: ResearchProtocolStatus,
+    to: ResearchProtocolStatus
+  ): Result<void> {
+    if (this.canTransition(from, to)) {
+      return Result.ok<void>(undefined);
+    }
+
+    return Result.fail<void>(
+      `Invalid ResearchProtocol status transition from "${from}" to "${to}".`
+    );
   }
 }
